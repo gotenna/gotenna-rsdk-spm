@@ -3,11 +3,11 @@
 
 import PackageDescription
 
-let version = "3.2.5-iostest"
+let version = "3.1.13"
 let moduleName = "RSDK"
 
 // shasum -a 256 <path-to-zip>
-let checksum = "381ae4f1c9f0f362ef7f4420331db52ad1a5910cf268bab03aff3c8754007472"
+let checksum = "db81deab32340cda7e606bbbbb5485530c4bfc715817a265cedb614b15d6fd3a"
 
 let package = Package(
     name: moduleName,
@@ -20,7 +20,7 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: moduleName,
-            url: "https://gotenna.jfrog.io/artifactory/android-libs-release-local/com/gotenna/sdk/radio-sdk-internal-ios/\(version)/radio-sdk-internal-ios-\(version).zip",
+            url: "https://gotenna.jfrog.io/artifactory/android-libs-release-local/com/gotenna/sdk/radio-sdk-external-ios/\(version)/radio-sdk-external-ios-\(version).zip",
             checksum: checksum
         )
     ]
