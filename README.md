@@ -38,7 +38,7 @@ Task {
 }
 ```
 
-Where `preProcessAction` and `postProcessAction` can be used to manipulate data passed to and received from the SDK (e.g. for things like encryption/decryption). the `sdkToken` and `appId` should be provided to you by goTenna.
+Where `preProcessAction` and `postProcessAction` can be used to manipulate data passed to and received from the SDK (e.g. for things like encryption/decryption). The `sdkToken` and `appId` should be provided to you by goTenna.
 
 ### Scan and Connect
 
