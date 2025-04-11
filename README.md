@@ -38,7 +38,7 @@ Task {
 }
 ```
 
-Where `preProcessAction` and `postProcessAction` can be used to manipulate data passed to and received from the SDK (e.g. for things like encryption/decryption).
+Where `preProcessAction` and `postProcessAction` can be used to manipulate data passed to and received from the SDK (e.g. for things like encryption/decryption). the `sdkToken` and `appId` should be provided to you by goTenna.
 
 ### Scan and Connect
 
@@ -96,7 +96,7 @@ Task {
 }
 ```
 
-**Note**: There are many default values above. These are values that usually clients won't actually need to specify. Unfortunately there is currently a Kotlin Multiplatform translation issue for Swift that drops the Kotlin default values, so all must be explicitly specified.
+**Note**: There are many default values above. These are values that usually clients wouldn't actually need to specify. Unfortunately there is currently a Kotlin Multiplatform translation issue for Swift that drops the Kotlin default values, so all must be explicitly specified.
 
 ### Observe radio state changes
 
@@ -127,3 +127,18 @@ Task {
     }))
 }
 ```
+
+If someone else on the network sends out their location or other messages, you would pick that up in the above collector.
+
+### High Level Suggestion
+
+What we normally do is this:
+
+1. Node A sends everyone on the mesh network its Location as a broadcast message every minute.
+1. Node B receives Location from A and other nodes.
+1. Node B stores (app logic) the GID of each node in a contact list.
+1. Node B uses the contact list to get the GID of the node they want to contact.
+
+## Full API Documentation
+
+API documentation is lost in the Kotlin Multiplatform -> Swift/Objc header translation. To see all API documentation, goTenna can give you access to our generated docs on Artifactory.
