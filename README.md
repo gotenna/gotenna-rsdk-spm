@@ -1,7 +1,7 @@
 # goTenna Radio SDK for iOS
 
 ## Overview
-The goTenna radio SDK for iOS allows client applications to utilize our mesh radio network for transmitting data from one radio to another. The SDK abstracts the lower level communication layers into higher level objects, so you can do things like radio.send(Location(...)).
+The goTenna radio SDK for iOS allows client applications to utilize our mesh radio network for transmitting data from one radio to another. The SDK abstracts the lower level communication layers into higher level objects, so you can do things like `radio.send(Location(...))`.
 
 ## Requirements
 Make sure you've been given access to the RSDK on goTenna's JFrog/Artifactory instance. Also make sure you put those credentials in your macOS keychain:
