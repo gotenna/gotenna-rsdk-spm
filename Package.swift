@@ -7,7 +7,7 @@ let version = "3.1.15"
 let moduleName = "RSDK"
 
 // shasum -a 256 <path-to-zip>
-let checksum = "30a0de54f9f8810e40b57d8770d28a885c8a35ee097386d86c3945da7073f496"
+let checksum = "087f7f6a601d611bca5cd67bec38108acdfda75bdc88df231e5a97fa6d8191eb"
 
 let package = Package(
     name: moduleName,
