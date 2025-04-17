@@ -141,4 +141,4 @@ What we normally do is this:
 
 ## Full API Documentation
 
-API documentation is lost in the Kotlin Multiplatform -> Swift/Objc header translation. To see all API documentation, goTenna can give you access to our generated docs on Artifactory.
+API documentation is lost in the Kotlin Multiplatform -> Swift/Objc header translation, so Xcode API documentation won't work. To see the full API documentation, view the javadoc.jar file in the release folder in Artifactory.
