@@ -46,7 +46,8 @@ Where `preProcessAction` and `postProcessAction` can be used to manipulate data 
 Task {
     do {
         let radios = try await GotennaClient.shared.scan(connectionType: ConnectionType.ble, address: nil)
-        try await radios.first?.connect()
+        activeRadio = radios.first // locally stored variable to keep track of active radio
+        try await activeRadio?.connect()
     } catch {
         print("Error scanning/connecting: \(error)")
     }
@@ -54,6 +55,19 @@ Task {
 ```
 
 This is a simple example where we just want to connect to the first radio we find in the scan.
+
+### Set Frequencies, Power, and Bandwidth
+
+```swift
+Task {
+    // Note: Values used here is only for example.
+    // Please use your Part 90 allocated or local regulatory body's allowed frequencies.
+    let controlChannel = GTFrequencyChannel(frequencyMhz: 455, isControlChannel: true)
+    let dataChannel = GTFrequencyChannel(frequencyMhz: 465, isControlChannel: false)
+    try await activeRadio?.setFrequencyChannels(channels: [controlChannel, dataChannel])
+    try await activeRadio?.setPowerAndBandwidth(power: GTPowerLevel.five, bandwidth: GTBandwidth.bandwidth118)
+}
+```
 
 ### Send Location
 
