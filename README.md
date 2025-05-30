@@ -8,6 +8,12 @@ Make sure you've been given access to the RSDK on goTenna's JFrog/Artifactory in
 
 ![](img/keychain.png)
 
+Some users have reported issues when their keychain item shows a ![](img/pencil.png) icon instead of an ![](img/at.png) icon. If that's the case, you should create a new keychain item following these steps:
+
+![](img/create.png)
+
+![](img/continue.png) --- ![](img/password.png)
+
 ## Installation
 1. Right click your project > Add Package Dependencies... or go to the Package Dependencies section of your project and click the + button.
 2. Paste https://github.com/gotenna/gotenna-rsdk-spm into the Package URL field.
