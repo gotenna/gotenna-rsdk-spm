@@ -8,6 +8,8 @@ Make sure you've been given access to the RSDK on goTenna's JFrog/Artifactory in
 
 ![](img/keychain.png)
 
+After making changes to your macOS keychain, reset package caches in Xcode by going to File > Packages > Reset Package Caches.
+
 Some users have reported issues when their keychain item shows a ![](img/pencil.png) icon instead of an ![](img/at.png) icon. If that's the case, you should create a new keychain item following these steps:
 
 ![](img/create.png)
