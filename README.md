@@ -7,11 +7,11 @@ The goTenna radio SDK for iOS allows client applications to utilize our mesh rad
 1. Make sure you've been given access to the RSDK on goTenna's JFrog/Artifactory instance. Also make sure you put those credentials in your macOS keychain:
 
 ![](img/keychain1.png)
-<small>
-Keychain Item Name: https://gotenna.jfrog.io
-Account Name: your_jfrog_account_login
+<span style="font-size: 0.85em;">
+Keychain Item Name: https://gotenna.jfrog.io<br>
+Account Name: your_jfrog_account_login<br>
 Password: your_jfrog_account_password
-</small>
+</span>
 ![](img/keychain2.png)
 
 Some users have reported issues when their keychain item shows a <img src="img/pencil.png" width="20" alt="pencil icon"> icon instead of an <img src="img/at.png" width="20" alt="at icon"> icon. If that's the case, you should create a new keychain item following above steps.
