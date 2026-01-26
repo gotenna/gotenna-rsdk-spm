@@ -3,10 +3,32 @@
 ## Overview
 The goTenna radio SDK for iOS allows client applications to utilize our mesh radio network for transmitting data from one radio to another. The SDK abstracts the lower level communication layers into higher level objects, so you can do things like `radio.send(Location(...))`.
 
+### Requirements
+1. Make sure you've been given access to the RSDK on goTenna's JFrog/Artifactory instance. Also make sure you put those credentials in your macOS keychain:
 
-### <u>For Requirements & Installation steps, follow this confluence page:</u> [iOS Apps Debug Mode](https://gotenna.atlassian.net/wiki/x/AYBIi)
+![](img/keychain1.png)
+<small>
+Keychain Item Name: `https://gotenna.jfrog.io`
+Account Name: `your_jfrog_account_login`
+Password: `your_jfrog_account_password`
+</small>
+![](img/keychain2.png)
 
-### Usage
+Some users have reported issues when their keychain item shows a <img src="img/pencil.png" width="20" alt="pencil icon"> icon instead of an <img src="img/at.png" width="20" alt="at icon"> icon. If that's the case, you should create a new keychain item following above steps.
+
+![](img/keychain3.png)
+
+
+2. After making changes to your macOS keychain, reset package caches in Xcode by going to File > Packages > Reset Package Caches.
+
+## Installation
+1. Right click your project > Add Package Dependencies... or go to the Package Dependencies section of your project and click the + button
+2. Paste `https://github.com/gotenna/gotenna-rsdk-spm` into the Package URL field.
+3. Select the exact version you want from the Releases GitHub page (note if the version has a "v" as in v3.1.13, you would only put 3.1.13 in the version field for Swift Package Manager).
+
+![](img/package.png)
+
+## Usage
 
 For a quick reference, see our [iOS sample app](https://github.com/gotenna/rsdk-samples/tree/main/ios) that demonstrates a simple implementation of scanning, connecting, and sending some data.
 
