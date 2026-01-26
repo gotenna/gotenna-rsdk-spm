@@ -8,9 +8,9 @@ The goTenna radio SDK for iOS allows client applications to utilize our mesh rad
 
 ![](img/keychain1.png)
 <small>
-Keychain Item Name: `https://gotenna.jfrog.io`
-Account Name: `your_jfrog_account_login`
-Password: `your_jfrog_account_password`
+Keychain Item Name: https://gotenna.jfrog.io
+Account Name: your_jfrog_account_login
+Password: your_jfrog_account_password
 </small>
 ![](img/keychain2.png)
 
