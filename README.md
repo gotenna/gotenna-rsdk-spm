@@ -7,10 +7,10 @@ The goTenna radio SDK for iOS allows client applications to utilize our mesh rad
 1. Make sure you've been given access to the RSDK on goTenna's JFrog/Artifactory instance. Also make sure you put those credentials in your macOS keychain:
 
 ![](img/keychain1.png)
-<span style="font-size: 0.85em;">
-Keychain Item Name: https://gotenna.jfrog.io<br>
-Account Name: your_jfrog_account_login<br>
-Password: your_jfrog_account_password
+<span style="font-size: 0.75em;">
+Keychain Item Name: `https://gotenna.jfrog.io`<br>
+Account Name: `your_jfrog_account_login`<br>
+Password: `your_jfrog_account_password`
 </span>
 ![](img/keychain2.png)
 
