@@ -1,0 +1,114 @@
+name: Update Package.swift
+
+# Updates Package.swift with a new RSDK iOS external version + checksum and
+# pushes the result directly to main as gotenna-bot. Triggered automatically
+# from the multiplatform-radio-sdk release pipeline (event_type=rsdk-published)
+# after a successful external promotion, or manually via workflow_dispatch.
+
+on:
+  repository_dispatch:
+    types: [rsdk-published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: RSDK version (e.g. 3.6.3)
+        required: true
+        type: string
+      checksum:
+        description: SHA-256 of the published radio-sdk-external-ios-<version>.zip
+        required: true
+        type: string
+
+# Serialize updates so back-to-back publishes can't race on the same file.
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 #v4.3.1
+        with:
+          # Always start from main so a manual workflow_dispatch from a
+          # feature branch can't accidentally drag unrelated commits along
+          # when we push the bump (would also fail non-fast-forward).
+          ref: refs/heads/main
+          token: ${{ secrets.PAT_TOKEN }}
+
+      - name: Resolve inputs
+        id: vars
+        env:
+          DISPATCH_VERSION: ${{ github.event.client_payload.version }}
+          DISPATCH_CHECKSUM: ${{ github.event.client_payload.checksum }}
+          MANUAL_VERSION: ${{ inputs.version }}
+          MANUAL_CHECKSUM: ${{ inputs.checksum }}
+        run: |
+          set -euo pipefail
+          VERSION="${DISPATCH_VERSION:-${MANUAL_VERSION}}"
+          CHECKSUM="${DISPATCH_CHECKSUM:-${MANUAL_CHECKSUM}}"
+          if [ -z "$VERSION" ] || [ -z "$CHECKSUM" ]; then
+            echo "Both version and checksum are required" >&2
+            exit 1
+          fi
+          echo "version=$VERSION"   >> "$GITHUB_OUTPUT"
+          echo "checksum=$CHECKSUM" >> "$GITHUB_OUTPUT"
+
+      - name: Update Package.swift
+        env:
+          VERSION: ${{ steps.vars.outputs.version }}
+          CHECKSUM: ${{ steps.vars.outputs.checksum }}
+        run: |
+          set -euo pipefail
+          sed -i -E 's/^let version = ".*"/let version = "'"${VERSION}"'"/' Package.swift
+          sed -i -E 's/^let checksum = ".*"/let checksum = "'"${CHECKSUM}"'"/' Package.swift
+          grep -E '^let (version|checksum) = ' Package.swift
+
+      - name: Commit, tag, and push
+        id: push
+        env:
+          VERSION: ${{ steps.vars.outputs.version }}
+        run: |
+          set -euo pipefail
+          git config user.name  "${{ secrets.USER_NAME }}"
+          git config user.email "${{ secrets.USER_EMAIL }}"
+
+          if git diff --quiet Package.swift; then
+            echo "No changes to Package.swift; nothing to commit"
+            exit 0
+          fi
+
+          git add Package.swift
+          git commit -m "Update RSDK to ${VERSION}"
+          git push origin HEAD:refs/heads/main
+
+          # Tag matches the existing v<x.y.z> convention. Skip re-tagging if
+          # the tag is already on the remote (e.g. a manual rerun).
+          TAG="v${VERSION}"
+          if git ls-remote --exit-code --tags origin "${TAG}" >/dev/null 2>&1; then
+            echo "Tag ${TAG} already exists on remote; skipping"
+            echo "tag=" >> "$GITHUB_OUTPUT"
+          else
+            git tag -a "${TAG}" -m "RSDK ${VERSION}"
+            git push origin "${TAG}"
+            echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create GitHub Release
+        if: steps.push.outputs.tag != ''
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+          TAG: ${{ steps.push.outputs.tag }}
+          VERSION: ${{ steps.vars.outputs.version }}
+          CHECKSUM: ${{ steps.vars.outputs.checksum }}
+        run: |
+          set -euo pipefail
+          gh release create "${TAG}" \
+            --title "RSDK ${VERSION}" \
+            --notes "External RSDK iOS XCFramework ${VERSION}.
+
+          SHA-256: \`${CHECKSUM}\`"
