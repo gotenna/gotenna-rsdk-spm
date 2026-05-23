@@ -3,11 +3,11 @@
 
 import PackageDescription
 
-let version = "3.4.22"
+let version = "3.4.15"
 let moduleName = "RSDK"
 
 // shasum -a 256 <path-to-zip>
-let checksum = "cbc6ccafc08e2c7f7ea390362b9ab2942603f131d72542b5650501184fc3f49c"
+let checksum = "7a9c6a7c9eee9f881582865b4d42373d2ae94358a1a0be8537be92353c26b10c"
 
 let package = Package(
     name: moduleName,
